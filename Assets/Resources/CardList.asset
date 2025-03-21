@@ -13,61 +13,61 @@ MonoBehaviour:
   m_Name: CardList
   m_EditorClassIdentifier: 
   colorCardData:
-  - no: 1
+  - no: 10
     type: color
     name: "\uBE68\uAC15"
     explanation: "\uC190 \uD328\uC548\uC5D0 \uAC19\uC740 \uC0C9\uC758 \uCE74\uB4DC\uAC00
       \uC788\uC73C\uBA74 \uD544\uB4DC\uC5D0 \uB193\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4"
     cardicon: CardIcon/cardicon_red
-  - no: 2
+  - no: 20
     type: color
     name: "\uB178\uB791"
     explanation: "\uC190 \uD328\uC548\uC5D0 \uAC19\uC740 \uC0C9\uC758 \uCE74\uB4DC\uAC00
       \uC788\uC73C\uBA74 \uD544\uB4DC\uC5D0 \uB193\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4"
     cardicon: CardIcon/cardicon_yellow
-  - no: 3
+  - no: 30
     type: color
     name: "\uD30C\uB791"
     explanation: "\uC190 \uD328\uC548\uC5D0 \uAC19\uC740 \uC0C9\uC758 \uCE74\uB4DC\uAC00
       \uC788\uC73C\uBA74 \uD544\uB4DC\uC5D0 \uB193\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4"
     cardicon: CardIcon/cardicon_blue
-  - no: 4
+  - no: 40
     type: color
     name: "\uCD08\uB85D"
     explanation: "\uC190 \uD328\uC548\uC5D0 \uAC19\uC740 \uC0C9\uC758 \uCE74\uB4DC\uAC00
       \uC788\uC73C\uBA74 \uD544\uB4DC\uC5D0 \uB193\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4"
     cardicon: CardIcon/cardicon_green
-  - no: 5
+  - no: 50
     type: color
     name: "\uBCF4\uB77C"
     explanation: "\uC190 \uD328\uC548\uC5D0 \uAC19\uC740 \uC0C9\uC758 \uCE74\uB4DC\uAC00
       \uC788\uC73C\uBA74 \uD544\uB4DC\uC5D0 \uB193\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4"
     cardicon: CardIcon/cardicon_purple
   eventCardData:
-  - no: 100
+  - no: 1001
     type: event
     name: "\uC9C8\uC8FC"
     explanation: "\uCE74\uB4DC\uB97C 2\uC7A5 \uBF51\uC2B5\uB2C8\uB2E4"
     cardicon: CardIcon/cardicon_run
-  - no: 101
+  - no: 1011
     type: event
     name: "\uCE74\uBA5C\uB808\uC628"
     explanation: "\uC774 \uCE74\uB4DC\uB97C \uC6D0\uD558\uB294 \uC0C9\uC758 \uCE74\uB4DC\uB85C
       \uCDE8\uAE09\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4"
     cardicon: CardIcon/cardicon_paint
-  - no: 102
+  - no: 1021
     type: event
     name: "\uC0BC\uB9AC\uC548"
     explanation: "\uC774 \uCE74\uB4DC\uAC00 \uD328\uC5D0 \uC788\uB294 \uACBD\uC6B0
       \uACC4\uC18D\uD574\uC11C \uD328\uB97C \uACF5\uAC1C\uD574\uC57C \uD569\uB2C8\uB2E4"
     cardicon: CardIcon/cardicon_3eyes
-  - no: 103
+  - no: 1031
     type: event
     name: "\uC120\uBB3C\uC900\uBE44"
     explanation: "\uC790\uC2E0 \uC190 \uD328 \uCE74\uB4DC \uC911 \uD558\uB098\uB97C
       \uB9E8 \uC67C\uCABD\uC5D0 \uB193\uC2B5\uB2C8\uB2E4"
     cardicon: CardIcon/cardicon_present
-  - no: 104
+  - no: 1041
     type: event
     name: "\uD3C9\uD654\uD611\uC815"
     explanation: "\uC774 \uCE74\uB4DC\uB97C \uD544\uB4DC\uC5D0 \uB193\uC2B5\uB2C8\uB2E4.
@@ -75,7 +75,7 @@ MonoBehaviour:
       \uC11C\uB85C \uB4DC\uB85C\uC6B0\uD558\uB294 \uB9E4\uC218\uAC00 2\uC7A5\uC774
       \uB429\uB2C8\uB2E4"
     cardicon: CardIcon/cardicon_peace
-  - no: 105
+  - no: 1051
     type: event
     name: "\uBA85\uCD94\uB9AC"
     explanation: "\uB2E4\uC74C\uC5D0 \uC0C1\uB300\uAC00 \uC0AC\uC6A9\uD560 \uCEEC\uB7EC

@@ -58,6 +58,8 @@ public class HaveCardData// : MonoBehaviour 제거해야 저장이 됨
         CurItemCount = items.Count;
         return items;
     }
+    
+
     // 카드를 분해하면 일정 재화 획득
     public int GetPieces(HaveCardStock deletecard)
     {

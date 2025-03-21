@@ -10,6 +10,7 @@ public class PlayerData
     public int Packgold;
     public int Decks;
     public HaveCardData haveCardData;//여기에 있는 HaveCardStock가 소유 카드를 나타냄
+    public DeckCardData deckCardData;
 }
 
 // 게임 구동 전반에 필요한 런타임 데이터를 관리
@@ -25,9 +26,14 @@ public class GameManager : SingleTon<GameManager>
     {
         get => pData;
     }
+    
     // 기존 유저 세이브 파일 생성
-
-    private void Start()
+    protected override void DoAwake()
+    {
+        base.DoAwake();
+        DataStart();
+    }
+    private void DataStart()
     {
         dataPath = Application.persistentDataPath + "/Save";
         //DeleteData();
@@ -37,11 +43,12 @@ public class GameManager : SingleTon<GameManager>
         //SaveData();
 
         HaveCardStock newcard = new HaveCardStock();
-        newcard.cardID = 1;
+        newcard.cardID = 10;
         newcard.amount = 1;
         newcard.uID = 1;
-
         GetCard(newcard);
+
+        //SetAllTableCard();
 
         //Debug.Log(pData.haveCardData.GetCardList());
 
@@ -57,6 +64,7 @@ public class GameManager : SingleTon<GameManager>
         pData.Decks = 1;
 
         pData.haveCardData = new HaveCardData();
+        pData.deckCardData = new DeckCardData();
     }
 
     #region _Save&Load_
@@ -122,10 +130,17 @@ public class GameManager : SingleTon<GameManager>
     }
     #endregion
 
+    private void SetAllTableCard()
+    {
+        AllCardData.Inst.AddAllCard();
+    }
+
+
     // 대놓고 변수를 참조 하는 것 보단 따로 참조할 변수를 만들어주지
     public HaveCardData HCDATA
     {
         get => pData.haveCardData;
+        //get => PData.haveCardData;
     }
 
     // 추후 필요할 경우 겟터 셋터 만들어주기

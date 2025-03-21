@@ -9,6 +9,15 @@ public class CardDataManager : SingleTon<CardDataManager> //MonoBehaviour
     private Dictionary<int, colorCardData_Entity> dicColorcardData = new Dictionary<int, colorCardData_Entity>();
     private Dictionary<int, eventCardData_Entity> dicEventcardData = new Dictionary<int, eventCardData_Entity>();
 
+    public Dictionary<int, colorCardData_Entity> DICColorCardData
+    {
+        get => dicColorcardData;
+    }
+
+    public Dictionary<int, eventCardData_Entity> DICEventCardData
+    {
+        get => dicEventcardData;
+    }
 
     protected override void DoAwake()
     {
@@ -47,5 +56,16 @@ public class CardDataManager : SingleTon<CardDataManager> //MonoBehaviour
     public bool GetEventCardData(int No, out eventCardData_Entity EventCardData)
     {
         return dicEventcardData.TryGetValue(No, out EventCardData);
+    }
+
+    // 값을 기반으로 테이블을 반환
+    public colorCardData_Entity ReturnColorCardTable(int index)
+    {
+        return cardList.colorCardData[index];
+    }
+
+    public eventCardData_Entity ReturnEventCardTable(int index)
+    {
+        return cardList.eventCardData[index];
     }
 }
