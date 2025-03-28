@@ -13,11 +13,11 @@ public class DeckUI : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private RectTransform contentTrans;
 
-    private List<UIDeckCardSlot> slots = new List<UIDeckCardSlot>();// 잘 나옴
+    private List<UIDeckCardSlot> slots = new List<UIDeckCardSlot>();
     private UIDeckCardSlot slot;
-
-    private int currentCount;// 현재 몇개 만들었는지
+        
     private int maxCount;   //몇 개까지 만들 수 있는지
+    private int spaceslot; // 비어있는 공간을 표시
 
     private List<AllCardStock> cardList; // 모든 카드 데이터
 
@@ -45,6 +45,8 @@ public class DeckUI : MonoBehaviour
     {
         
         maxCount = 20;// 나중에 CardDataManager에서 총 카드의 갯수를 참조해야함
+        spaceslot = maxCount;
+
         for (int i = 0; i < maxCount; i++)
         {
             if (Instantiate(cardPrefab, contentTrans).TryGetComponent<UIDeckCardSlot>(out slot))
@@ -63,6 +65,7 @@ public class DeckUI : MonoBehaviour
     // 현재 구현된 카드들을 참조해서 카드 슬롯을 갱신
     public void RefreshCardBoxUI(int index)
     {
+        // 받은 ui버튼의 번호를 통해 카드의 넘버를 가져오기
         int slotcardno;
         if(index < CardDataManager.Inst.DICColorCardData.Count)
         {
@@ -74,9 +77,10 @@ public class DeckUI : MonoBehaviour
         }
 
         cardList = AllCardData.Inst.GetCardList();
-        //currentCount = GameManager.Inst.DCDATA.CurDeckCount;
+        
       
         bool cardFound = false;
+        
 
         // 이미 생성된 슬롯들에서 해당 카드 번호를 가진 슬롯이 있는지 확인
         for (int i = 0; i < slots.Count; i++)
@@ -88,49 +92,79 @@ public class DeckUI : MonoBehaviour
                 //slots.RemoveAt(i);
 
                 GameManager.Inst.DCDATA.CurDeckCount--;  // 덱에 등록된 카드 수 감소
-                Debug.Log("해당 카드 삭제!");
+                spaceslot++;
+                //Debug.Log("해당 카드 삭제!");
                 cardFound = true;
 
                 //break;  // 한 슬롯만 삭제하면 된다면 break; 여러 개면 제거 처리 반복
             }
+
         }
 
         // 해당 카드 번호를 가진 슬롯이 없으면 추가
         if (!cardFound)
         {
-            
-            // 빈 슬롯 찾기
-            int emptyIndex = -1;
-            for (int i = 0; i < slots.Count; i++)
+            int looptime;// = 0;
+
+            // 만약 받은 카드가 컬러 카드인지 이벤트 카드인지 확인
+            // 컬러 카드이면 5장 추가
+            if (AllCardData.Inst.isColorCard(index))// 이 체크를 카드에 넣기 전에 확인해야함
             {
-                Debug.Log(slots[i].SLOTCARDNO);
-                if (slots[i].SLOTCARDNO < 1) // 슬롯이 비어있다면
+                // 5번 추가를 하면 덱이 20장을 넘어가는 지 확인(이미 생성된 슬롯보다 더많은 슬롯이 필요할 때)
+                looptime = 5;
+                if(looptime > spaceslot)
                 {
-                    emptyIndex = i;
-                    break;
+                    Debug.Log("빈 슬롯이 넣게 될 카드수 보다 적습니다");
+                    return;
                 }
             }
-            if (emptyIndex != -1)
+            // 이벤트 카드이면 한장만 추가
+            else
             {
-                
-                if (cardList[emptyIndex].cardID > -1)
+                looptime = 1;
+            }
+
+            for (int j = 0; j < looptime; j++)
+            {
+                // 빈 슬롯 찾기
+                int emptyIndex = -1;
+                for (int i = 0; i < slots.Count; i++)
                 {
-                    
+
+                    if (slots[i].SLOTCARDNO < 1) // 슬롯이 비어있다면
+                    {
+                        emptyIndex = i;
+                        break;
+                    }
+                }
+                if (emptyIndex != -1)
+                {
                     slots[emptyIndex].DrawCardSlot(cardList[index]);
                     GameManager.Inst.DCDATA.CurDeckCount++;
-                    Debug.Log("카드 추가!");
+                    spaceslot--;
+                    //Debug.Log("카드 추가!");
+                    /*if (cardList[emptyIndex].cardID > -1)
+                    {
+
+                        slots[emptyIndex].DrawCardSlot(cardList[index]);
+                        GameManager.Inst.DCDATA.CurDeckCount++;
+                        Debug.Log("카드 추가!");
+                    }
+                    else
+                    {
+                        Debug.Log("유효하지 않은 카드입니다.");
+                    }*/
                 }
                 else
                 {
-                    Debug.Log("유효하지 않은 카드입니다.");
+                    Debug.Log("슬롯이 가득 찼습니다.");
                 }
             }
-            else
-            {
-                Debug.Log("슬롯이 가득 찼습니다.");
-            }
+
+            
 
         }
+        //Debug.Log(spaceslot);
         ReorderDeckUI();
 
     }

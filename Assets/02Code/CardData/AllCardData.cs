@@ -15,10 +15,6 @@ public class AllCardData : SingleTon<AllCardData>//MonoBehaviour
 
     CardList cardList;
 
-    private void Start()
-    {
-        //AddAllCard();
-    }
     protected override void DoAwake()
     {
         base.DoAwake();
@@ -34,14 +30,14 @@ public class AllCardData : SingleTon<AllCardData>//MonoBehaviour
         {
             AllCardStock allcardstock = new AllCardStock();
             allcardstock.cardID = cardList.colorCardData[i].no;
-            //Debug.Log(allcardstock.cardID + "하나");
+            
             Allcard.Add(allcardstock);
         }
         for (int i = 0; i < cardList.eventCardData.Count; i++)
         {
             AllCardStock allcardstock = new AllCardStock();
             allcardstock.cardID = cardList.eventCardData[i].no;
-            //Debug.Log(allcardstock.cardID + "둘");
+            
             Allcard.Add(allcardstock);
         }
 
@@ -54,6 +50,31 @@ public class AllCardData : SingleTon<AllCardData>//MonoBehaviour
 
         return Allcard;
     }
-    
-    
+
+    // 정수값을 받으면 해당 정수값에 해당되는 카드가 컬러 카드인지
+    public bool isColorCard(int index)
+    {
+        if(Allcard[index].cardID % 10 == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+
+    }
+    // 카드 번호값을 받아서 그 카드가 컬러 카드인지
+    public bool isColorCardTocardno(int index)
+    {
+        if(index % 10 == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

@@ -8,9 +8,10 @@ public class PlayerData
 {
     public string nickName;
     public int Packgold;
-    public int Decks;
+    public int Decks;// 가지고 있는 덱의 수
     public HaveCardData haveCardData;//여기에 있는 HaveCardStock가 소유 카드를 나타냄
-    public DeckCardData deckCardData;
+    //public DeckCardData deckCardData;
+    public List<DeckCardData> deckCardData;
 }
 
 // 게임 구동 전반에 필요한 런타임 데이터를 관리
@@ -26,6 +27,13 @@ public class GameManager : SingleTon<GameManager>
     {
         get => pData;
     }
+
+    private int selectingDeckNo;// = 1; // 선택중인 덱 번호
+    public int SELECTINGDeckno
+    {
+        get => selectingDeckNo;
+        set => selectingDeckNo = value;
+    }
     
     // 기존 유저 세이브 파일 생성
     protected override void DoAwake()
@@ -38,9 +46,9 @@ public class GameManager : SingleTon<GameManager>
         dataPath = Application.persistentDataPath + "/Save";
         //DeleteData();
 
-        LoadData();
-        //CreateUserData("1호");
-        //SaveData();
+        //LoadData();
+        CreateUserData("1호");
+        SaveData();
 
         /*HaveCardStock newcard = new HaveCardStock();
         newcard.cardID = 10;
@@ -48,11 +56,6 @@ public class GameManager : SingleTon<GameManager>
         newcard.uID = 1;
         GetCard(newcard);*/
 
-        //SetAllTableCard();
-
-        //Debug.Log(pData.haveCardData.GetCardList());
-
-        //string strData = JsonUtility.ToJson(pData);
     }
 
     // 신규 유저
@@ -64,8 +67,13 @@ public class GameManager : SingleTon<GameManager>
         pData.Decks = 1;
 
         pData.haveCardData = new HaveCardData();
-        pData.deckCardData = new DeckCardData();
+        SELECTINGDeckno = 0;
+        //pData.deckCardData[SELECTINGDeckno] = new DeckCardData();
+        pData.deckCardData = new List<DeckCardData>();
+
+        pData.deckCardData.Add(new DeckCardData());
     }
+
 
     #region _Save&Load_
 
@@ -130,7 +138,7 @@ public class GameManager : SingleTon<GameManager>
 
     public void DeckinCard(int uicardindex)//삭제는 안에 있음
     {
-        if(uicardindex < CardDataManager.Inst.DICColorCardData.Count)
+        if(uicardindex < CardDataManager.Inst.DICColorCardData.Count) // 컬러 카드일 경우
         {
             colorCardData_Entity colorCardDE;
             colorCardDE = CardDataManager.Inst.ReturnColorCardTable(uicardindex);
@@ -140,11 +148,13 @@ public class GameManager : SingleTon<GameManager>
             newcard.amount = 5;
             newcard.uID = 1;
 
-            pData.deckCardData.AddCard(newcard);
+            newcard.isColorCard = true;
+            newcard.ownisme = true;
+
+            pData.deckCardData[selectingDeckNo].AddCard(newcard);
         }
-        else
+        else// 이벤트 카드일 경우
         {
-            //Debug.Log("이벤트 카드 입니다");
             eventCardData_Entity eventCardDE;
             eventCardDE = CardDataManager.Inst.ReturnEventCardTable(uicardindex- CardDataManager.Inst.DICColorCardData.Count);
 
@@ -153,7 +163,10 @@ public class GameManager : SingleTon<GameManager>
             newcard.amount = 1;
             newcard.uID = 1;
 
-            pData.deckCardData.AddCard(newcard);
+            newcard.isColorCard = false;
+            newcard.ownisme = true;
+
+            pData.deckCardData[selectingDeckNo].AddCard(newcard);
         }
         
     }
@@ -167,7 +180,12 @@ public class GameManager : SingleTon<GameManager>
 
     public DeckCardData DCDATA
     {
-        get => pData.deckCardData;
+        get => pData.deckCardData[selectingDeckNo];
+    }
+
+    public void GetSELECTINGDeckno(int index)
+    {
+        SELECTINGDeckno = index;
     }
 
     // 추후 필요할 경우 겟터 셋터 만들어주기
