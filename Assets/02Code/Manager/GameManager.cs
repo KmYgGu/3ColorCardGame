@@ -42,11 +42,11 @@ public class GameManager : SingleTon<GameManager>
         //CreateUserData("1호");
         //SaveData();
 
-        HaveCardStock newcard = new HaveCardStock();
+        /*HaveCardStock newcard = new HaveCardStock();
         newcard.cardID = 10;
         newcard.amount = 1;
         newcard.uID = 1;
-        GetCard(newcard);
+        GetCard(newcard);*/
 
         //SetAllTableCard();
 
@@ -75,9 +75,7 @@ public class GameManager : SingleTon<GameManager>
     public void SaveData()
     {
         // 유니티 멀티플랫폼 구동될 수 있도록,
-
-        
-
+      
         string data = JsonUtility.ToJson(pData);
 
         // 암호화
@@ -130,17 +128,46 @@ public class GameManager : SingleTon<GameManager>
     }
     #endregion
 
-    private void SetAllTableCard()
+    public void DeckinCard(int uicardindex)//삭제는 안에 있음
     {
-        AllCardData.Inst.AddAllCard();
+        if(uicardindex < CardDataManager.Inst.DICColorCardData.Count)
+        {
+            colorCardData_Entity colorCardDE;
+            colorCardDE = CardDataManager.Inst.ReturnColorCardTable(uicardindex);
+
+            DeckCardStock newcard = new DeckCardStock();
+            newcard.cardID = colorCardDE.no;
+            newcard.amount = 5;
+            newcard.uID = 1;
+
+            pData.deckCardData.AddCard(newcard);
+        }
+        else
+        {
+            //Debug.Log("이벤트 카드 입니다");
+            eventCardData_Entity eventCardDE;
+            eventCardDE = CardDataManager.Inst.ReturnEventCardTable(uicardindex- CardDataManager.Inst.DICColorCardData.Count);
+
+            DeckCardStock newcard = new DeckCardStock();
+            newcard.cardID = eventCardDE.no;
+            newcard.amount = 1;
+            newcard.uID = 1;
+
+            pData.deckCardData.AddCard(newcard);
+        }
+        
     }
 
-
-    // 대놓고 변수를 참조 하는 것 보단 따로 참조할 변수를 만들어주지
+    // 대놓고 변수를 참조 하는 것 보단 따로 참조할 변수를 만들어주기
     public HaveCardData HCDATA
     {
         get => pData.haveCardData;
         //get => PData.haveCardData;
+    }
+
+    public DeckCardData DCDATA
+    {
+        get => pData.deckCardData;
     }
 
     // 추후 필요할 경우 겟터 셋터 만들어주기

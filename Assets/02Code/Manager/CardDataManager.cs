@@ -40,13 +40,6 @@ public class CardDataManager : SingleTon<CardDataManager> //MonoBehaviour
         }
     }
 
-    void DicTest()
-    {
-        if (GetEventCardData(100, out eventCardData_Entity EventCardData))
-        {
-            //Debug.Log(EventCardData.name + ", " + EventCardData.explanation);
-        }
-    }
 
     public bool GetColorCardData(int No, out colorCardData_Entity ColorCardData)
     {

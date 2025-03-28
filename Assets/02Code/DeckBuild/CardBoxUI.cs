@@ -11,14 +11,16 @@ public class CardBoxUI : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private RectTransform contentTrans;
 
+    CardList allcardList;
+
     private List<UICardBoxCardSlot> slots = new List<UICardBoxCardSlot>();// 잘 나옴
     private UICardBoxCardSlot slot;
 
     private int currentCount;// 현재 몇개 만들었는지
     private int maxCount;   //몇 개까지 만들 수 있는지
 
-    [SerializeField]private List<HaveCardStock> cardList; // 실제 유저가 가지고 있는 카드 목록    ..없음
-
+    //private List<HaveCardStock> cardList; // 실제 유저가 가지고 있는 카드 목록    ..없음
+    private List<AllCardStock> allcardStock;
 
     private void Awake()
     {
@@ -31,7 +33,10 @@ public class CardBoxUI : MonoBehaviour
     // 카드 슬롯을 생성하고 초기화
     private void InitSlot()
     {
-        maxCount = CardDataManager.Inst.DICColorCardData.Count + CardDataManager.Inst.DICEventCardData.Count;//7;// 나중에 CardDataManager에서 총 카드의 갯수를 참조해야함
+        allcardList = Resources.Load<CardList>("CardList");
+        //maxCount = CardDataManager.Inst.DICColorCardData.Count + CardDataManager.Inst.DICEventCardData.Count;//7;// 나중에 CardDataManager에서 총 카드의 갯수를 참조해야함
+
+        maxCount = allcardList.colorCardData.Count + allcardList.eventCardData.Count;
         for (int i = 0; i < maxCount; i++)
         {
             
@@ -50,21 +55,57 @@ public class CardBoxUI : MonoBehaviour
     public void RefreshCardBoxUI()
     {
 
-        cardList = GameManager.Inst.HCDATA.GetCardList();
-        currentCount = GameManager.Inst.HCDATA.CurItemCount;
+        //cardList = GameManager.Inst.HCDATA.GetCardList();
+        //currentCount = GameManager.Inst.HCDATA.CurItemCount;
 
+        allcardStock = AllCardData.Inst.GetCardList();
 
         for (int i = 0; i < maxCount; i++)
         {
-            //slots[i].DrawCardSlot(cardList[i]);
-            if (i < currentCount && cardList[i].cardID > -1)// 소유하고 있는 카드의 수가 현재 세고 있는 카드 수보다 많고, 그 카드 아이디가 0보다 클 때
+
+            /*if (i < currentCount && cardList[i].cardID > -1)// 소유하고 있는 카드의 수가 현재 세고 있는 카드 수보다 많고, 그 카드 아이디가 0보다 클 때
             {
                 slots[i].DrawCardSlot(cardList[i]);
             }
             else // 빈칸 슬롯
             {
                 slots[i].ClearSlot();
+            }*/
+
+            /*if(slots[i].SLOTINDEX < allcardList.colorCardData.Count)
+            {
+                if (allcardList.colorCardData[i].no > -1)// 소유하고 있는 카드의 수가 현재 세고 있는 카드 수보다 많고, 그 카드 아이디가 0보다 클 때
+                {
+                    slots[i].DrawCardSlot(allcardStock[i]);
+                }
+                else // 빈칸 슬롯
+                {
+                    slots[i].ClearSlot();
+                }
             }
+            else
+            {
+                if (allcardList.eventCardData[i].no > -1)// 소유하고 있는 카드의 수가 현재 세고 있는 카드 수보다 많고, 그 카드 아이디가 0보다 클 때
+                {
+                    slots[i].DrawCardSlot(allcardList.eventCardData[i]);
+                }
+                else // 빈칸 슬롯
+                {
+                    slots[i].ClearSlot();
+                }
+            }*/
+
+            if (allcardStock[i].cardID > -1)// 소유하고 있는 카드의 수가 현재 세고 있는 카드 수보다 많고, 그 카드 아이디가 0보다 클 때
+            {
+                //Debug.Log(i+" 번째 " +allcardStock[i].cardID);
+                slots[i].DrawCardSlot(allcardStock[i]);
+            }
+            else // 빈칸 슬롯
+            {
+                slots[i].ClearSlot();
+            }
+
+
 
             //slots[i].SetSelectSlot(false); // 선택되지 않은 슬롯으로 오픈
         }

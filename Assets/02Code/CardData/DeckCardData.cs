@@ -4,7 +4,7 @@ using UnityEngine;
 
 // 덱에 카드를 몇 개 가지고 있는가?
 [System.Serializable]
-public class DeckCardStock
+public class DeckCardStock // 덱에 있는 카드 하나의 정보
 {
     public int cardID;  // 테이블 데이터의 ID
     public int amount;
@@ -17,7 +17,7 @@ public class DeckCardData
     private int maxDeckSlot = 20;
     public int MaxCounr => maxDeckSlot;
 
-    private int curDeckSlot;// 소유중인 카드 갯수
+    private int curDeckSlot = 0;// 덱에있는 카드 갯수
     public int CurDeckCount
     {
         get => curDeckSlot;
@@ -41,20 +41,27 @@ public class DeckCardData
         if (index < 0)// 인벤토리에 똑같은 아이템이 없는 경우,
         {
             Deckcards.Add(newCard);
-            curDeckSlot++;
-            //Debug.Log("HaveCardData에서 추가됨");
+            //curDeckSlot++; // 이건 Deckui에서 처리
+
+            //Debug.Log(newCard.cardID);
         }
         else
         {
-            Deckcards[index].amount += newCard.amount;
+            // 카드제거
+            //curDeckSlot--;            
+            Deckcards.RemoveAt(index);
+            Debug.Log("덱에서 해당 카드를 제거합니다 현재 덱 매장 수 :" + Deckcards.Count);
+                       
+            
         }
 
-
     }
+
     // UI에 표기하기 위해서 외부에서 데이터를 참조
     public List<DeckCardStock> GetCardList()
     {
-        CurDeckCount = Deckcards.Count;
+        //CurDeckCount = Deckcards.Count;
+
         return Deckcards;
     }
     // 카드를 분해하면 일정 재화 획득 // 덱 카드는 필요할까?

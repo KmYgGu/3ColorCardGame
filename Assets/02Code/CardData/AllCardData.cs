@@ -6,32 +6,34 @@ using UnityEngine;
 public class AllCardStock//저장하지 않음
 {
     public int cardID;  // 테이블 데이터의 ID
-    //public int amount;
-    //public int uID;     // 겹치지 않는 아이템의 고유 ID
+    
 }
 public class AllCardData : SingleTon<AllCardData>//MonoBehaviour
 {
-    //private int maxItemSlot = CardDataManager.Inst.DICColorCardData.Count + CardDataManager.Inst.DICEventCardData.Count;
+    
+    private List<AllCardStock> Allcard = new List<AllCardStock>();
 
-    [SerializeField]private List<AllCardStock> Allcard = new List<AllCardStock>();
+    CardList cardList;
 
     private void Start()
     {
-        AddAllCard();
+        //AddAllCard();
     }
     protected override void DoAwake()
     {
-        //base.DoAwake();
-        //AddAllCard();
+        base.DoAwake();
+        AddAllCard();
     }
     // 습득하는 기능
     public void AddAllCard()
     {
         //int index = FindCardIndex(newCard);// 몇 번째 슬롯에 있는 카드인지 검사
-        AllCardStock allcardstock = new AllCardStock();
+
+        cardList = Resources.Load<CardList>("CardList");
+        //AllCardStock allcardstock = new AllCardStock();
 
 
-        for (int i = 0; i < CardDataManager.Inst.DICColorCardData.Count; i++)
+        /*for (int i = 0; i < CardDataManager.Inst.DICColorCardData.Count; i++)
         {
             allcardstock.cardID = CardDataManager.Inst.ReturnColorCardTable(i).no;
 
@@ -42,14 +44,31 @@ public class AllCardData : SingleTon<AllCardData>//MonoBehaviour
             allcardstock.cardID = CardDataManager.Inst.ReturnEventCardTable(i).no;
 
             Allcard.Add(allcardstock);
+        }*/
+
+        for (int i = 0; i < cardList.colorCardData.Count; i++)
+        {
+            AllCardStock allcardstock = new AllCardStock();
+            allcardstock.cardID = cardList.colorCardData[i].no;
+            //Debug.Log(allcardstock.cardID + "하나");
+            Allcard.Add(allcardstock);
         }
-        //Debug.Log(Allcard.Count);
+        for (int i = 0; i < cardList.eventCardData.Count; i++)
+        {
+            AllCardStock allcardstock = new AllCardStock();
+            allcardstock.cardID = cardList.eventCardData[i].no;
+            //Debug.Log(allcardstock.cardID + "둘");
+            Allcard.Add(allcardstock);
+        }
+
+        
 
     }
     // UI에 표기하기 위해서 외부에서 데이터를 참조
     public List<AllCardStock> GetCardList()
     {
         //CurItemCount = items.Count;
+        //Debug.Log(Allcard);
         return Allcard;
     }
     

@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -910,7 +909,6 @@ MonoBehaviour:
   scrollRect: {fileID: 756936757}
   cardPrefab: {fileID: 531915194828773130, guid: 0b65381f39015e0449bdfd106ea3b33b, type: 3}
   contentTrans: {fileID: 670644129}
-  cardList: []
 --- !u!1 &281841840
 GameObject:
   m_ObjectHideFlags: 0
@@ -4166,6 +4164,7 @@ GameObject:
   - component: {fileID: 1371522072}
   - component: {fileID: 1371522074}
   - component: {fileID: 1371522073}
+  - component: {fileID: 1371522075}
   m_Layer: 5
   m_Name: inDeck
   m_TagString: Untagged
@@ -4232,6 +4231,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1371522071}
   m_CullTransparentMesh: 1
+--- !u!114 &1371522075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371522071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074343249f2f27d438940c6ca7ca1df0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 117427788}
+  cardPrefab: {fileID: 4745956632847652273, guid: c38b995bf9d28c748aa0dd31645e1ca6, type: 3}
+  contentTrans: {fileID: 1875447221}
 --- !u!1 &1404718476
 GameObject:
   m_ObjectHideFlags: 0
@@ -5755,8 +5769,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1331722919}
   m_HandleRect: {fileID: 1331722918}
   m_Direction: 2
-  m_Value: 1.0000132
-  m_Size: 0.9000001
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5885,6 +5899,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1875447221}
+  - component: {fileID: 1875447223}
+  - component: {fileID: 1875447222}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -5909,8 +5925,46 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.00035901114}
-  m_SizeDelta: {x: 0, y: 300}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &1875447222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875447220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
+--- !u!114 &1875447223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875447220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 5
+    m_Right: 5
+    m_Top: 5
+    m_Bottom: 5
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 88, y: 88}
+  m_Spacing: {x: 3, y: 3}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &1926428583
 GameObject:
   m_ObjectHideFlags: 0
