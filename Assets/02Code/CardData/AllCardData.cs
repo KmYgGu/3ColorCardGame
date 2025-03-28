@@ -27,24 +27,8 @@ public class AllCardData : SingleTon<AllCardData>//MonoBehaviour
     // 습득하는 기능
     public void AddAllCard()
     {
-        //int index = FindCardIndex(newCard);// 몇 번째 슬롯에 있는 카드인지 검사
 
         cardList = Resources.Load<CardList>("CardList");
-        //AllCardStock allcardstock = new AllCardStock();
-
-
-        /*for (int i = 0; i < CardDataManager.Inst.DICColorCardData.Count; i++)
-        {
-            allcardstock.cardID = CardDataManager.Inst.ReturnColorCardTable(i).no;
-
-            Allcard.Add(allcardstock);
-        }
-        for (int i = 0; i < CardDataManager.Inst.DICEventCardData.Count; i++)
-        {
-            allcardstock.cardID = CardDataManager.Inst.ReturnEventCardTable(i).no;
-
-            Allcard.Add(allcardstock);
-        }*/
 
         for (int i = 0; i < cardList.colorCardData.Count; i++)
         {
@@ -67,8 +51,7 @@ public class AllCardData : SingleTon<AllCardData>//MonoBehaviour
     // UI에 표기하기 위해서 외부에서 데이터를 참조
     public List<AllCardStock> GetCardList()
     {
-        //CurItemCount = items.Count;
-        //Debug.Log(Allcard);
+
         return Allcard;
     }
     

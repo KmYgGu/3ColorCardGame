@@ -98,17 +98,7 @@ public class DeckUI : MonoBehaviour
         // 해당 카드 번호를 가진 슬롯이 없으면 추가
         if (!cardFound)
         {
-            /*currentCount = GameManager.Inst.DCDATA.CurDeckCount;
-
-            if (currentCount >= slots.Count)
-            {
-                Debug.Log("슬롯이 가득 찼습니다.");
-                return;
-            }
-            slots[currentCount].DrawCardSlot(cardList[index]);
-                        
-            GameManager.Inst.DCDATA.CurDeckCount++;*/
-
+            
             // 빈 슬롯 찾기
             int emptyIndex = -1;
             for (int i = 0; i < slots.Count; i++)
@@ -143,30 +133,11 @@ public class DeckUI : MonoBehaviour
         }
         ReorderDeckUI();
 
-        // 현재 덱의 다음 빈 슬롯(현재 카드 개수 위치)에 새 카드 추가
-        //if (currentCount < slots.Count && cardList[index].cardID > -1)
-        //{
-        //    slots[currentCount].DrawCardSlot(cardList[index]);
-
-
-        //    // 덱에 추가한 후, 현재 덱 개수를 증가시켜야 한다면 여기서 처리
-        //    GameManager.Inst.DCDATA.CurDeckCount++;
-        //}
-        //else
-        //{
-        //    Debug.Log("슬롯이 가득 찼거나, 유효하지 않은 카드입니다.");
-        //}
-
     }
 
     private void ReorderDeckUI()
     {
-        /*slots.Sort((a, b) =>
-        {
-            if (a.SLOTCARDNO == 0) return 1;  // 빈 슬롯(a)은 뒤로 이동
-            if (b.SLOTCARDNO == 0) return -1; // 빈 슬롯(b)은 뒤로 이동
-            return a.SLOTCARDNO.CompareTo(b.SLOTCARDNO); // 카드 번호 오름차순 정렬
-        });*/
+        
         slots = slots.OrderBy(slot => slot.SLOTCARDNO == 0 ? int.MaxValue : slot.SLOTCARDNO).ToList();
 
         //  정렬된 슬롯 UI 갱신

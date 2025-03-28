@@ -47,47 +47,9 @@ public class UICardSlot : MonoBehaviour
 
         transform.GetChild(1).TryGetComponent<Transform>(out btnTrans);
         btnTrans.GetChild(0).TryGetComponent<TextMeshProUGUI>(out amount);// 다른 UI 요소들은 RayCast 타겟을 꺼버리면 됨
-
-        //buttonclicked?.Invoke();
+                
     }
     //카드 정보 갱신
-    /*public virtual void DrawCardSlot(HaveCardStock havecardData)//데이터 매니저에서 가져오기
-    {
-        if (havecardData.cardID % 10 == 0)// 카드의 고유 번호 일의 자리가 0이면 컬러 카드
-        {
-            if (CardDataManager.Inst.GetColorCardData(havecardData.cardID, out colorCardData_Entity cardInfo))
-            {
-                //Debug.Log(cardInfo.cardicon);
-                // 동적 로딩을 통해 icon의 변경
-
-                cardimg.sprite = Resources.Load<Sprite>(cardInfo.cardicon);// 테이블에 적힌 파일경로를 기반으로 동적 로딩
-                cardimg.enabled = true;
-                ChangeAmount(havecardData.amount);  // 보류갯수 갱신
-                isEmpty = false; // 비어있지 않으니 false
-            }
-            else
-            {
-                Debug.Log($"UICardSlot. 테이블에 없는 카드 입니다. {havecardData.cardID}");
-            }
-        }
-        else if (havecardData.cardID % 10 == 1)// 카드의 고유 번호 일의 자리가 1이면 이벤트 카드
-        {
-            if (CardDataManager.Inst.GetEventCardData(havecardData.cardID, out eventCardData_Entity cardInfo))
-            {
-
-                cardimg.sprite = Resources.Load<Sprite>(cardInfo.cardicon);// 테이블에 적힌 파일경로를 기반으로 동적 로딩
-                cardimg.enabled = true;
-                ChangeAmount(havecardData.amount);  // 보류갯수 갱신
-                isEmpty = false; // 비어있지 않으니 false
-            }
-            else
-            {
-                Debug.Log($"UICardSlot. 테이블에 없는 카드 입니다. {havecardData.cardID}");
-            }
-        }
-
-    }*/
-
     public virtual void DrawCardSlot<T>(T havecardData)//데이터 매니저에서 가져오기
     {
         isSelect = true;
@@ -173,8 +135,7 @@ public class UICardSlot : MonoBehaviour
                 }
             }
         }
-          
-
+        
     }
         
 
@@ -194,11 +155,7 @@ public class UICardSlot : MonoBehaviour
         imgColor.a = 0.5f;
         cardimg.color = imgColor;
         amount.enabled = false;
-
         slotcardno = 0;
-        
-
-
         //gameObject.SetActive(false);
     }
 
