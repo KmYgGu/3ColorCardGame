@@ -28,11 +28,13 @@ public class UIDeckButton : MonoBehaviour
         TryGetComponent<Button>(out button);
         transform.GetChild(0).TryGetComponent<TextMeshProUGUI>(out DeckNameText);
 
-        //button.onClick.AddListener(OnClick_Select);
+        button.onClick.AddListener(OnClick_Select);
     }
 
     private void OnClick_Select()
     {
         GameManager.Inst.GetSELECTINGDeckno(slotIndex);
+        //Debug.Log(slotIndex);
+        DeckUI.OnDeckbtnClicked?.Invoke();
     }
 }

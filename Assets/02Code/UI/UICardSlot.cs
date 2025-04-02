@@ -135,7 +135,46 @@ public class UICardSlot : MonoBehaviour
                 }
             }
         }
-        
+
+        else if (havecardData is DeckCardStock DeckCardStock)
+        {
+            if (DeckCardStock.cardID % 10 == 0)// 카드의 고유 번호 일의 자리가 0이면 컬러 카드
+            {
+                if (CardDataManager.Inst.GetColorCardData(DeckCardStock.cardID, out colorCardData_Entity cardInfo))
+                {
+                    //Debug.Log(cardInfo.cardicon);
+                    // 동적 로딩을 통해 icon의 변경
+                    slotcardno = DeckCardStock.cardID;
+
+
+                    cardimg.sprite = Resources.Load<Sprite>(cardInfo.cardicon);// 테이블에 적힌 파일경로를 기반으로 동적 로딩
+                    cardimg.enabled = true;
+                    ChangeAmount(0);  // 보류갯수 갱신
+                    isEmpty = false; // 비어있지 않으니 false
+                }
+                else
+                {
+                    Debug.Log($"UICardSlot. 테이블에 없는 카드 입니다. {DeckCardStock.cardID}");
+                }
+            }
+            else if (DeckCardStock.cardID % 10 == 1)// 카드의 고유 번호 일의 자리가 1이면 이벤트 카드
+            {
+                if (CardDataManager.Inst.GetEventCardData(DeckCardStock.cardID, out eventCardData_Entity cardInfo))
+                {
+                    slotcardno = DeckCardStock.cardID;
+
+                    cardimg.sprite = Resources.Load<Sprite>(cardInfo.cardicon);// 테이블에 적힌 파일경로를 기반으로 동적 로딩
+                    cardimg.enabled = true;
+                    ChangeAmount(0);
+                    isEmpty = false; // 비어있지 않으니 false
+                }
+                else
+                {
+                    Debug.Log($"UICardSlot. 테이블에 없는 카드 입니다. {DeckCardStock.cardID}");
+                }
+            }
+        }
+
     }
         
 

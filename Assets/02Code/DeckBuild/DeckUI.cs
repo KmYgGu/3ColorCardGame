@@ -21,15 +21,18 @@ public class DeckUI : MonoBehaviour
 
     private List<AllCardStock> cardList; // 모든 카드 데이터
 
-    public static Action<int> OnButtonClicked;
+    public static Action<int> OnButtonClicked; //UICardBoxCardSlot에서 버튼을 눌렀을 때
+    public static Action OnDeckbtnClicked;
 
     private void OnEnable()
     {
         OnButtonClicked += RefreshCardBoxUI;
+        OnDeckbtnClicked += RefreshCardBoxUI_FromDeckData;
     }
     private void OnDisable()
     {
         OnButtonClicked -= RefreshCardBoxUI;
+        OnDeckbtnClicked -= RefreshCardBoxUI_FromDeckData;
     }
 
     private void Awake()
@@ -52,7 +55,6 @@ public class DeckUI : MonoBehaviour
             if (Instantiate(cardPrefab, contentTrans).TryGetComponent<UIDeckCardSlot>(out slot))
             {
                 slot.SLOTINDEX = i;
-                //slot.EMPTY =
                 slots.Add(slot);
             }
             else
@@ -160,15 +162,14 @@ public class DeckUI : MonoBehaviour
                     Debug.Log("슬롯이 가득 찼습니다.");
                 }
             }
-
-            
+          
 
         }
-        //Debug.Log(spaceslot);
         ReorderDeckUI();
 
     }
 
+    // 카드 번호에 따라 정렬
     private void ReorderDeckUI()
     {
         
@@ -180,4 +181,43 @@ public class DeckUI : MonoBehaviour
             slots[i].transform.SetSiblingIndex(i);
         }
     }
+
+    public void RefreshCardBoxUI_FromDeckData()
+    {
+        cardList = AllCardData.Inst.GetCardList();
+        List<DeckCardStock> deckCards = GameManager.Inst.DCDATA.DECKcards;
+        int maxDeckSlot = GameManager.Inst.DCDATA.CurDeckCount; // 덱의 최대 슬롯 개수
+        int deckSize = deckCards.Count; // 현재 덱에 있는 카드 개수
+
+        // 기존 슬롯을 덱의 카드 정보로 갱신
+        for (int i = 0; i < slots.Count; i++)//maxDeckSlot
+        {
+            if (i < deckSize) // 덱에 있는 카드 정보로 UI 갱신
+            {
+                //DeckCardStock cardData = deckCards[i];
+                int cardID = deckCards[i].cardID;
+
+                if (cardID > 0 && cardID < cardList.Count) // 유효한 카드 ID인지 확인
+                {
+                    slots[i].DrawCardSlot(deckCards[i]); // 해당 슬롯에 카드 배치
+                }
+                else
+                {
+                    slots[i].ClearSlot(); // 카드가 유효하지 않다면 슬롯 초기화
+                }
+            }// 남은 카드들
+            else
+            {
+                slots[i].ClearSlot(); // 덱 크기를 초과하는 슬롯 초기화
+            }
+        }
+
+        // 빈 슬롯 개수 업데이트
+        //spaceslot = slots.Count - deckSize;
+        spaceslot = slots.Count - maxDeckSlot;
+
+        // UI 정렬
+        ReorderDeckUI();
+    }
+
 }

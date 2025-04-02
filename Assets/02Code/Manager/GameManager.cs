@@ -65,10 +65,13 @@ public class GameManager : SingleTon<GameManager>
         pData.nickName = newNickName;
         pData.Packgold = 1000;
         pData.Decks = 1;
+        //pData.Decks = 3;
 
         pData.haveCardData = new HaveCardData();
         SELECTINGDeckno = 0;
         //pData.deckCardData[SELECTINGDeckno] = new DeckCardData();
+
+        // 덱 개수 만큼 반복?
         pData.deckCardData = new List<DeckCardData>();
 
         pData.deckCardData.Add(new DeckCardData());
@@ -186,6 +189,14 @@ public class GameManager : SingleTon<GameManager>
     public void GetSELECTINGDeckno(int index)
     {
         SELECTINGDeckno = index;
+    }
+
+    public void AddDeckSlot()
+    {
+        //pData.deckCardData = new List<DeckCardData>();
+
+        pData.deckCardData.Add(new DeckCardData());
+        Debug.Log(pData.deckCardData.Count);
     }
 
     // 추후 필요할 경우 겟터 셋터 만들어주기
