@@ -93,7 +93,8 @@ public class DeckUI : MonoBehaviour
                 slots[i].ClearSlot();  // 슬롯 클리어: 카드 삭제
                 //slots.RemoveAt(i);
 
-                GameManager.Inst.DCDATA.CurDeckCount--;  // 덱에 등록된 카드 수 감소
+                //GameManager.Inst.DCDATA.CurDeckCount--;  // 덱에 등록된 카드 수 감소
+
                 spaceslot++;
                 //Debug.Log("해당 카드 삭제!");
                 cardFound = true;
@@ -142,7 +143,9 @@ public class DeckUI : MonoBehaviour
                 if (emptyIndex != -1)
                 {
                     slots[emptyIndex].DrawCardSlot(cardList[index]);
-                    GameManager.Inst.DCDATA.CurDeckCount++;
+
+                    //GameManager.Inst.DCDATA.CurDeckCount++;
+
                     spaceslot--;
                     //Debug.Log("카드 추가!");
                     /*if (cardList[emptyIndex].cardID > -1)
@@ -184,9 +187,10 @@ public class DeckUI : MonoBehaviour
 
     public void RefreshCardBoxUI_FromDeckData()
     {
-        cardList = AllCardData.Inst.GetCardList();
-        List<DeckCardStock> deckCards = GameManager.Inst.DCDATA.DECKcards;
+        /*cardList = AllCardData.Inst.GetCardList();
+        List<DeckCardStock> deckCards = GameManager.Inst.DCDATA.GetCardList();//DECKcards;
         int maxDeckSlot = GameManager.Inst.DCDATA.CurDeckCount; // 덱의 최대 슬롯 개수
+                
         int deckSize = deckCards.Count; // 현재 덱에 있는 카드 개수
 
         // 기존 슬롯을 덱의 카드 정보로 갱신
@@ -200,6 +204,7 @@ public class DeckUI : MonoBehaviour
                 if (cardID > 0 && cardID < cardList.Count) // 유효한 카드 ID인지 확인
                 {
                     slots[i].DrawCardSlot(deckCards[i]); // 해당 슬롯에 카드 배치
+                    Debug.Log($"{i}번째 이 카드는 {deckCards[i].cardID}");
                 }
                 else
                 {
@@ -214,7 +219,50 @@ public class DeckUI : MonoBehaviour
 
         // 빈 슬롯 개수 업데이트
         //spaceslot = slots.Count - deckSize;
-        spaceslot = slots.Count - maxDeckSlot;
+        spaceslot = slots.Count - maxDeckSlot;*/
+
+
+        // 모든 카드 정보를 가져옴
+        cardList = AllCardData.Inst.GetCardList();
+
+        // 덱에 들어있는 카드 정보를 가져옴
+        List<DeckCardStock> deckCards = GameManager.Inst.DCDATA.GetCardList();
+        int deckSize = deckCards.Count;  // 현재 덱에 있는 카드 수
+        //Debug.Log(deckSize);
+
+        // UI 슬롯 전체를 한 번 Clear 처리 (이전 카드 정보 초기화)
+        for (int i = 0; i < slots.Count; i++)
+        {
+            slots[i].ClearSlot();
+        }
+
+        // 덱 데이터에 맞게 슬롯에 카드 정보를 반영
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (i < deckSize) // 덱에 카드가 있는 슬롯에는
+            {
+                int cardID = deckCards[i].cardID;
+                // 유효한 카드 ID이면
+                if (cardID > 0)// && cardID < cardList.Count
+                {
+                    slots[i].DrawCardSlot(deckCards[i]);
+                    Debug.Log($"{i}번째 슬롯에 카드 {deckCards[i].cardID} 적용");
+                }
+                else
+                {
+                    slots[i].ClearSlot();
+                }
+            }
+            else
+            {
+                // 덱에 없는 슬롯은 명시적으로 Clear
+                slots[i].ClearSlot();
+            }
+        }
+
+        // 빈 슬롯 개수 업데이트: 전체 슬롯 수 - 덱에 들어있는 카드 수
+        spaceslot = slots.Count - deckSize;
+
 
         // UI 정렬
         ReorderDeckUI();

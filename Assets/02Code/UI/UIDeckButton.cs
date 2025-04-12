@@ -31,10 +31,18 @@ public class UIDeckButton : MonoBehaviour
         button.onClick.AddListener(OnClick_Select);
     }
 
+    private void Start()
+    {
+        DeckNameText.text = GameManager.Inst.PData.deckCardData[SLOTINDEX].DeckName;
+    }
+
     private void OnClick_Select()
     {
+        // 싱글톤 게임매니저에게 선택중인 덱이 몇번째 인지 변경
         GameManager.Inst.GetSELECTINGDeckno(slotIndex);
         //Debug.Log(slotIndex);
+
+        //덱에 있는 카드 이미지 변경 함수를 호출
         DeckUI.OnDeckbtnClicked?.Invoke();
     }
 }

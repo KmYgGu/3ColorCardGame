@@ -34,7 +34,9 @@ public class GameManager : SingleTon<GameManager>
         get => selectingDeckNo;
         set => selectingDeckNo = value;
     }
-    
+
+    DeckCardData enemyDeck;// 상대방이 쓸 덱
+
     // 기존 유저 세이브 파일 생성
     protected override void DoAwake()
     {
@@ -56,6 +58,7 @@ public class GameManager : SingleTon<GameManager>
         newcard.uID = 1;
         GetCard(newcard);*/
 
+        //CreateEnemyDeckFromCPUDeck(0);
     }
 
     // 신규 유저
@@ -75,8 +78,14 @@ public class GameManager : SingleTon<GameManager>
         pData.deckCardData = new List<DeckCardData>();
 
         pData.deckCardData.Add(new DeckCardData());
-    }
 
+        
+    }
+    private void Start()
+    {
+        //CreateEnemyDeckFromCPUDeck(0);
+        MakeFirstDeck();
+    }
 
     #region _Save&Load_
 
@@ -155,6 +164,7 @@ public class GameManager : SingleTon<GameManager>
             newcard.ownisme = true;
 
             pData.deckCardData[selectingDeckNo].AddCard(newcard);
+            
         }
         else// 이벤트 카드일 경우
         {
@@ -170,9 +180,76 @@ public class GameManager : SingleTon<GameManager>
             newcard.ownisme = true;
 
             pData.deckCardData[selectingDeckNo].AddCard(newcard);
+            
         }
         
     }
+
+    public DeckCardData CreateEnemyDeckFromCPUDeck(int deckIndex)
+    {
+        CardList cardList = Resources.Load<CardList>("CardList");
+        //DeckCardData enemyDeck = new DeckCardData();
+        enemyDeck = new DeckCardData();
+
+        if (deckIndex < 0 || deckIndex >= cardList.CPUDeckData.Count)
+        {
+            Debug.LogError("잘못된 덱 인덱스입니다.");
+            return enemyDeck;
+        }
+
+        CPUDeckData_Entity selectedDeck = cardList.CPUDeckData[deckIndex];
+        enemyDeck.SetDeckName(selectedDeck.DeckName);
+
+        List<int> cardNumbers = selectedDeck.ToCardList();
+
+        foreach (int cardNo in cardNumbers)
+        {
+            bool isColor = AllCardData.Inst.isColorCardTocardno(cardNo);
+
+            DeckCardStock stock = new DeckCardStock
+            {
+                cardID = cardNo,
+                amount = 1,
+                isColorCard = isColor,
+                ownisme = false
+            };
+            //Debug.Log(cardNo);
+            
+            enemyDeck.CPUDeckAddcard(stock);
+        }
+
+        return enemyDeck;
+    }
+
+    // 처음 계정을 시작할 땐, 첫 번째 덱을 기본 덱으로 생성
+    void MakeFirstDeck()
+    {
+        CardList cardList = Resources.Load<CardList>("CardList");
+        CPUDeckData_Entity selectedDeck = cardList.CPUDeckData[0];
+
+        pData.deckCardData[0].SetDeckName("기본 덱");
+
+        List<int> cardNumbers = selectedDeck.ToCardList();
+
+        foreach (int cardNo in cardNumbers)
+        {
+            bool isColor = AllCardData.Inst.isColorCardTocardno(cardNo);
+
+            DeckCardStock stock = new DeckCardStock
+            {
+                cardID = cardNo,
+                amount = 1,
+                isColorCard = isColor,
+                ownisme = false
+            };
+            //Debug.Log(cardNo);
+
+            pData.deckCardData[0].CPUDeckAddcard(stock);
+        }
+
+        //Debug.Log(pData.deckCardData[0].DeckName);
+    }
+
 
     // 대놓고 변수를 참조 하는 것 보단 따로 참조할 변수를 만들어주기
     public HaveCardData HCDATA
@@ -188,6 +265,7 @@ public class GameManager : SingleTon<GameManager>
 
     public void GetSELECTINGDeckno(int index)
     {
+        //selectingDeckNo = index;
         SELECTINGDeckno = index;
     }
 
@@ -196,7 +274,7 @@ public class GameManager : SingleTon<GameManager>
         //pData.deckCardData = new List<DeckCardData>();
 
         pData.deckCardData.Add(new DeckCardData());
-        Debug.Log(pData.deckCardData.Count);
+        //Debug.Log(pData.deckCardData.Count);//덱 최대치를 추가
     }
 
     // 추후 필요할 경우 겟터 셋터 만들어주기

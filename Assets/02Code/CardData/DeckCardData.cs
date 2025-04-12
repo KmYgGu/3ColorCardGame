@@ -17,15 +17,15 @@ public class DeckCardStock // 덱에 있는 카드 하나의 정보
 [System.Serializable]
 public class DeckCardData
 {
-    private int maxDeckSlot;// = 20;
-    public int MaxCounr => maxDeckSlot;
+    //private int maxDeckSlot;// = 20;
+    //public int MaxCounr => maxDeckSlot;
 
-    private int curDeckSlot = 0;// 덱에있는 카드 갯수 추후 게임 매니저를 통해 초기화를 해야함
-    public int CurDeckCount
+    //private int curDeckSlot = 0;// 덱에있는 카드 갯수 추후 게임 매니저를 통해 초기화를 해야함
+    /*public int CurDeckCount
     {
         get => curDeckSlot;
         set => curDeckSlot = value;
-    }
+    }*/
 
     private List<DeckCardStock> Deckcards = new List<DeckCardStock>();
 
@@ -34,7 +34,7 @@ public class DeckCardData
         get => Deckcards;
     }
 
-    private string DeckName;
+    public string DeckName;
 
     // 덱에 넣는 기능
     public void AddCard(DeckCardStock newCard)
@@ -69,7 +69,7 @@ public class DeckCardData
                 
 
                 Deckcards.Add(newCard);
-                curDeckSlot++; // 이건 Deckui에서 처리
+                //curDeckSlot++; // 이건 Deckui에서 처리
             }
 
         }
@@ -83,11 +83,17 @@ public class DeckCardData
             for (int j = 0; j < looptime; j++)
             {
                 index = FindCardIndex(newCard);
-                curDeckSlot--;
+                //curDeckSlot--;
                 Deckcards.RemoveAt(index);
             }
             Debug.Log("덱에서 해당 카드를 제거합니다 현재 덱 매수 :" + Deckcards.Count);
         }             
+    }
+
+    //cPU덱 전용 추가는 중복확인 하지않고 바로 추가
+    public void CPUDeckAddcard(DeckCardStock newCard)
+    {
+        Deckcards.Add(newCard);
     }
 
     // UI에 표기하기 위해서 외부에서 데이터를 참조
@@ -121,7 +127,7 @@ public class DeckCardData
                 if (Deckcards[index].amount <= 0)
                 {
                     Deckcards.RemoveAt(index);
-                    curDeckSlot--;
+                    //curDeckSlot--;
                 }
             }
         }

@@ -93,3 +93,25 @@ MonoBehaviour:
       \uADF8 \uCE74\uB4DC\uB4E4\uC744 \uC0C1\uB300\uC758 \uB371\uC73C\uB85C \uB418\uB3CC\uB9AC\uACE0
       \uB371\uC744 \uC11E\uC2B5\uB2C8\uB2E4."
     cardicon: CardIcon/cardicon_reason
+  CPUDeckData:
+  - DeckName: StartDeck
+    card1: 10
+    card2: 10
+    card3: 10
+    card4: 10
+    card5: 10
+    card6: 20
+    card7: 20
+    card8: 20
+    card9: 20
+    card10: 20
+    card11: 30
+    card12: 30
+    card13: 30
+    card14: 30
+    card15: 30
+    card16: 1001
+    card17: 1011
+    card18: 1021
+    card19: 1041
+    card20: 1051
